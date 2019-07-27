@@ -10,11 +10,7 @@ class App extends React.Component {
         'Feed cats',
     ]
 
-    state = {
-        todos: Immutable.OrderedSet(this.tasks),
-        finished: Immutable.OrderedSet(),
-        newtodo: '',
-    }
+    state = this.freshState();
 
     styles = {
         margin: '0 auto',
@@ -29,6 +25,36 @@ class App extends React.Component {
 
     inputStyle = {
         fontSize: '18pt',
+    }
+
+    secondsInTheDay = 86400000;
+
+    componentDidMount() {
+        this.repeatAt(0, () => {
+            alert('resetting');
+            this.setState(this.freshState());
+        })
+    }
+
+    freshState() {
+        return {
+            todos: Immutable.OrderedSet(this.tasks),
+            finished: Immutable.OrderedSet(),
+            newtodo: '',
+        };
+    }
+
+    repeatAt(hour, f) {
+        const now = new Date();
+        const date = now.getDate() + (now.getHours() < hour ? 0 : 1);
+        const start = new Date(now.getFullYear(), now.getMonth(), date, hour, 0, 0, 0);
+
+        const wait = start.getTime() - now.getTime();
+        console.log(wait);
+        setTimeout(() => {
+            f();
+            setInterval(f, this.secondsInTheDay);
+        }, wait);
     }
 
     renderTodos() {
