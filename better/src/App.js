@@ -1,11 +1,17 @@
 import React from 'react';
-import Todo from './Todo.js';
 import Immutable from 'immutable';
+
+import Todo from './Todo.js';
 
 class App extends React.Component {
 
+    tasks = [
+        'Feed Tommy',
+        'Feed cats',
+    ]
+
     state = {
-        todos: Immutable.OrderedSet(),
+        todos: Immutable.OrderedSet(this.tasks),
         finished: Immutable.OrderedSet(),
         newtodo: '',
     }
@@ -13,36 +19,41 @@ class App extends React.Component {
     styles = {
         margin: '0 auto',
         width: 800,
-        fontSize: '18pt',
+        fontSize: '24pt',
     }
 
     buttonStyle = {
-        fontSize: '14pt',
+        fontSize: '18pt',
         margin: '0 10px',
     }
 
     inputStyle = {
-        fontSize: '14pt',
+        fontSize: '18pt',
     }
 
     renderTodos() {
         return (
             <ul>
-                {this.state.todos.map(todo =>
+                {this.state.todos.map((todo, i) =>
                     <Todo
+                        key={i}
                         value={todo}
                         buttonStyle={this.buttonStyle}
-                        handleRemove={() => {this.setState(oldState => {return {
-                            todos: this.state.todos.remove(todo),
-                            finished: this.state.finished.add(todo),
-                        }})}}
+                        handleRemove={() => {this.setState(oldState => {
+                            return {
+                                todos: this.state.todos.remove(todo),
+                                finished: this.state.finished.add([todo, new Date()]),
+                            };
+                        })}}
                     />
                 )}
-                {!this.state.finished.isEmpty() && <hr />}
-                {this.state.finished.map(todo =>
+                {!this.state.finished.isEmpty() && !this.state.todos.isEmpty() && <hr />}
+                {this.state.finished.map(([todo, date], i) =>
                     <Todo
+                        key={i}
                         value={todo}
                         buttonStyle={this.buttonStyle}
+                        timeCompleted={date}
                         finished
                     />
                 )}
