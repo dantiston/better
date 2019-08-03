@@ -1,9 +1,19 @@
+/*
+@flow strict-local
+*/
+
 import React from 'react';
 import Immutable from 'immutable';
 
 import Todo from './Todo.js';
 
-class App extends React.Component {
+type State = {|
+    todos: Immutable.OrderedSet<string>,
+    finished: Immutable.OrderedSet<[string, Date]>,
+    newtodo: string,
+|}
+
+class App extends React.Component<{}, State> {
 
     tasks = [
         'Feed Tommy',
@@ -31,7 +41,6 @@ class App extends React.Component {
 
     componentDidMount() {
         this.repeatAt(0, () => {
-            alert('resetting');
             this.setState(this.freshState());
         })
     }
@@ -44,7 +53,7 @@ class App extends React.Component {
         };
     }
 
-    repeatAt(hour, f) {
+    repeatAt(hour: number, f: () => void) {
         const now = new Date();
         const date = now.getDate() + (now.getHours() < hour ? 0 : 1);
         const start = new Date(now.getFullYear(), now.getMonth(), date, hour, 0, 0, 0);
@@ -58,11 +67,12 @@ class App extends React.Component {
     }
 
     renderTodos() {
+        let i = 0;
         return (
             <ul>
-                {this.state.todos.map((todo, i) =>
+                {this.state.todos.map(todo =>
                     <Todo
-                        key={i}
+                        key={i++}
                         value={todo}
                         buttonStyle={this.buttonStyle}
                         handleRemove={() => {this.setState(oldState => {
@@ -74,13 +84,12 @@ class App extends React.Component {
                     />
                 )}
                 {!this.state.finished.isEmpty() && !this.state.todos.isEmpty() && <hr />}
-                {this.state.finished.map(([todo, date], i) =>
+                {this.state.finished.map(([todo, date]) =>
                     <Todo
-                        key={i}
+                        key={i++}
                         value={todo}
                         buttonStyle={this.buttonStyle}
                         timeCompleted={date}
-                        finished
                     />
                 )}
             </ul>

@@ -1,19 +1,23 @@
+/*
+@flow strict-local
+*/
+
 import React from 'react';
 
-/*
- * props.handleRemove
- * props.buttonStyle
- * props.finished
- * props.value
- * props.timeCompleted
- */
-class Todo extends React.Component {
+type Props = {|
+    buttonStyle: Object,
+    value: string,
+    timeCompleted?: Date,
+    handleRemove?: (Date) => void,
+|};
 
-    init(props) {
+class Todo extends React.Component<Props, {}> {
+
+    init(props: Props) {
         this.props = props;
     }
 
-    renderTimeCompleted(time) {
+    renderTimeCompleted(time: Date) {
         return `${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
     }
 
@@ -22,11 +26,11 @@ class Todo extends React.Component {
             <div>
                 {this.props.handleRemove && <button
                     style={this.props.buttonStyle}
-                    onClick={() => {this.props.handleRemove(new Date())}}>
+                    onClick={() => {this.props.handleRemove && this.props.handleRemove(new Date())}}>
                     X
                 </button>}
                 <span
-                    style={{textDecoration: this.props.finished ? 'line-through' : 'initial'}}>
+                    style={{textDecoration: this.props.timeCompleted != null ? 'line-through' : 'initial'}}>
                     {this.props.value}
                 </span>
                 {this.props.timeCompleted != null
