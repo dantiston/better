@@ -2,6 +2,7 @@
   "name": "better",
   "version": "0.1.0",
   "private": true,
+  "homepage" : "http://dantiston.github.io/better",
   "dependencies": {
     "immutable": "^4.0.0-rc.12",
     "react": "^16.8.6",
@@ -10,7 +11,6 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "prebuild": "babel src/ -d build/",
     "build": "react-scripts build",
     "predeploy": "npm run build",
     "test": "react-scripts test",
