@@ -5,19 +5,23 @@
 import React from 'react';
 import Immutable from 'immutable';
 
-import Todo from './Todo.js';
+import Todo from './Todo.react.js';
+import Form from './Form.react.js';
 
 type State = {|
     todos: Immutable.OrderedSet<string>,
     finished: Immutable.OrderedSet<[string, Date]>,
-    newtodo: string,
 |}
 
 class App extends React.Component<{}, State> {
 
     tasks = [
-        'Feed Tommy',
+        'Put Tommy out',
+        'Feed and medicate Tommy',
         'Feed cats',
+        'Fill animal waters',
+        'Wash bottles',
+        'Check diaper pail',
     ]
 
     state = this.freshState();
@@ -33,10 +37,6 @@ class App extends React.Component<{}, State> {
         margin: '0 10px',
     }
 
-    inputStyle = {
-        fontSize: '18pt',
-    }
-
     secondsInTheDay = 86400000;
 
     componentDidMount() {
@@ -49,7 +49,6 @@ class App extends React.Component<{}, State> {
         return {
             todos: Immutable.OrderedSet(this.tasks),
             finished: Immutable.OrderedSet(),
-            newtodo: '',
         };
     }
 
@@ -96,35 +95,15 @@ class App extends React.Component<{}, State> {
         );
     }
 
-    renderForm() {
-        return (
-            <form
-                onSubmit={e => {
-                    e.preventDefault();
-                    this.setState(oldState => {return {
-                        todos: oldState.todos.add(oldState.newtodo),
-                        newtodo: '',
-                    }});
-                }}
-            >
-                <input
-                    type='text'
-                    name='newtodo'
-                    value={this.state.newtodo}
-                    onChange={e => this.setState({newtodo: e.target.value})}
-                    style={this.inputStyle}
-                />
-                <button style={this.buttonStyle} type='button'>+</button>
-            </form>
-        );
-    }
-
     render() {
         return (
             <div style={this.styles}>
                 <h3>To dos</h3>
                 {this.renderTodos()}
-                {this.renderForm()}
+                <Form
+                    addTodo={(todo) => {this.setState(prevState => ({todos: prevState.todos.add(todo)}))}}
+                    buttonStyle={this.buttonStyle}
+                />
             </div>
         );
     }

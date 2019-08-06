@@ -7,8 +7,8 @@ import React from 'react';
 type Props = {|
     buttonStyle: Object,
     value: string,
-    timeCompleted?: Date,
-    handleRemove?: (Date) => void,
+    timeCompleted?: Date, // Only present if completed
+    handleRemove?: (Date) => void, // Only present if not completed
 |};
 
 class Todo extends React.Component<Props, {}> {
