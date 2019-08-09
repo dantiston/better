@@ -26,7 +26,7 @@
             }
 
             function addTodoButton() {
-                return "<button onclick=\"createNew();\">+</button>";
+                return "<button onclick=\"createNew()\">+</button>";
             }
 
             function newTodo(value, i, completed) {
@@ -61,6 +61,12 @@
 
             window.onload = function() {
                 render();
+                document.getElementById('newInput').onKeyUp = function() {
+                    if (event.keyCode == 13) {
+                        createNew();
+                        return false;
+                    }
+                }
             };
         </script>
     </head>
