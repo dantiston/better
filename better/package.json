@@ -2,7 +2,7 @@
   "name": "better",
   "version": "0.1.0",
   "private": true,
-  "homepage" : "http://dantiston.github.io/better",
+  "homepage" : "http://todos.trimbleworks.us",
   "dependencies": {
     "immutable": "^4.0.0-rc.12",
     "react": "^16.8.6",
