@@ -10,7 +10,7 @@
                 'Check diaper pail'
             ];
 
-            newTodos = [];
+            currentTodos = todos.slice();
 
             completedTodos = [];
 
@@ -37,8 +37,8 @@
             function render() {
                 var main = document.getElementById("todos");
                 main.innerHTML = ""
-                main.innerHTML += load(todos, true);
-                main.innerHTML += load(newTodos, false);
+                main.innerHTML += load(currentTodos, false);
+                main.innerHTML += load(completedTodos, true);
                 main.innerHTML += newTodoInput();
                 main.innerHTML += addTodoButton();
             }
@@ -46,15 +46,15 @@
             function createNew() {
                 input = document.getElementsById('newInput');
                 if (input.value != '') {
-                    newTodos.push(input.value);
+                    currentTodos.push(input.value);
                 }
                 input.value = '';
                 render();
             }
 
             function completeTodo(i) {
-                todo = todos.splice(i, 1);
-                newTodos.push(todo);
+                todo = currentTodos.splice(i, 1);
+                completedTodos.push(todo);
                 render();
             }
 
