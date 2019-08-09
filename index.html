@@ -14,10 +14,10 @@
 
             completedTodos = [];
 
-            function load(options) {
+            function load(options, completed) {
                 var i = 0;
                 return [""].concat(options).reduce(function(string, value) {
-                    return string + newTodo(value, i++);
+                    return string + newTodo(value, i++, completed);
                 });
             }
 
@@ -29,14 +29,17 @@
                 return "<button onclick=\"createNew();\">+</button>";
             }
 
-            function newTodo(value, i) {
-                return "<div><button onclick=\"completeTodo(" + i + ")\">X</button><span id='todo" + i + "'>" + value + "</span></div>";
+            function newTodo(value, i, completed) {
+                return "<div><button onclick=\"completeTodo(" + i + ")\">X</button>\
+                        <span style='text-decoration: " completed ? 'line-through' : 'none' +
+                        "' id='todo" + i + "'>" + value + "</span></div>";
             }
 
             function render() {
                 var main = document.getElementById("todos");
-                main.innerHTML += load(todos);
-                main.innerHTML += load(newTodos);
+                main.innerHTML = ""
+                main.innerHTML += load(todos, true);
+                main.innerHTML += load(newTodos, false);
                 main.innerHTML += newTodoInput();
                 main.innerHTML += addTodoButton();
             }
