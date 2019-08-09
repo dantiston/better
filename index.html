@@ -14,21 +14,6 @@
 
             completedTodos = [];
 
-            function createNew() {
-                input = document.getElementsById('newInput');
-                if (input.value != '') {
-                    newTodos.push(input.value);
-                }
-                input.value = '';
-                render(main);
-            }
-
-            function completeTodo(i) {
-                todo = todos.splice(i, 1);
-                newTodos.push(todo);
-                render(main);
-            }
-
             function load(options) {
                 var i = 0;
                 return [""].concat(options).reduce(function(string, value) {
@@ -48,16 +33,31 @@
                 return "<div><button onclick=\"completeTodo(" + i + ")\">X</button><span id='todo" + i + "'>" + value + "</span></div>";
             }
 
-            function render(main) {
+            function render() {
+                var main = document.getElementById("todos");
                 main.innerHTML += load(todos);
                 main.innerHTML += load(newTodos);
                 main.innerHTML += newTodoInput();
                 main.innerHTML += addTodoButton();
             }
 
+            function createNew() {
+                input = document.getElementsById('newInput');
+                if (input.value != '') {
+                    newTodos.push(input.value);
+                }
+                input.value = '';
+                render();
+            }
+
+            function completeTodo(i) {
+                todo = todos.splice(i, 1);
+                newTodos.push(todo);
+                render();
+            }
+
             window.onload = function() {
-                var main = document.getElementById("todos");
-                render(main);
+                render();
             };
         </script>
     </head>
