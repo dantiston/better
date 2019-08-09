@@ -1,14 +1,67 @@
 <html>
     <head>
         <script type="text/javascript">
+            todos = [
+                'Put Tommy out',
+                'Feed and medicate Tommy',
+                'Feed cats',
+                'Fill animal waters',
+                'Wash bottles',
+                'Check diaper pail'
+            ];
+
+            newTodos = [];
+
+            completedTodos = [];
+
+            function createNew() {
+                input = document.getElementsById('newInput');
+                if (input.value != '') {
+                    newTodos.push(input.value);
+                }
+                input.value = '';
+                render(main);
+            }
+
+            function completeTodo(i) {
+                todo = todos.splice(i, 1);
+                newTodos.push(todo);
+                render(main);
+            }
+
+            function load(options) {
+                var i = 0;
+                return [""].concat(options).reduce(function(string, value) {
+                    return string + newTodo(value, i++);
+                });
+            }
+
+            function newTodoInput() {
+                return "<input type='text' id='newInput' />";
+            }
+
+            function addTodoButton() {
+                return "<button onclick=\"createNew();\">+</button>";
+            }
+
+            function newTodo(value, i) {
+                return "<div><button onclick=\"completeTodo(" + i + ")\">X</button><span id='todo" + i + "'>" + value + "</span></div>";
+            }
+
+            function render(main) {
+                main.innerHTML += load(todos);
+                main.innerHTML += load(newTodos);
+                main.innerHTML += newTodoInput();
+                main.innerHTML += addTodoButton();
+            }
+
             window.onload = function() {
-                var nameDiv = document.getElementById("name");
-                nameDiv.innerHTML = "My name is T.J.!";
+                var main = document.getElementById("todos");
+                render(main);
             };
         </script>
     </head>
     <body>
-        <div>Hello world!</div>
-        <div id="name"></div>
+        <ul id="todos"></ul>
     </body>
 </html>
