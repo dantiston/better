@@ -59,25 +59,25 @@
                 render();
             }
 
-            function repeatAt(hour, f) {
-                var now = new Date();
-                var date = now.getDate() + (now.getHours() < hour ? 0 : 1);
-                var start = new Date(now.getFullYear(), now.getMonth(), date, hour, 0, 0, 0);
-
-                var wait = start.getTime() - now.getTime();
-                setTimeout(() => {
-                    f();
-                    setInterval(f, this.secondsInTheDay);
-                }, wait);
-            }
+            // function repeatAt(hour, f) {
+            //     var now = new Date();
+            //     var date = now.getDate() + (now.getHours() < hour ? 0 : 1);
+            //     var start = new Date(now.getFullYear(), now.getMonth(), date, hour, 0, 0, 0);
+            //
+            //     var wait = start.getTime() - now.getTime();
+            //     setTimeout(() => {
+            //         f();
+            //         setInterval(f, this.secondsInTheDay);
+            //     }, wait);
+            // }
 
             window.onload = function() {
                 render();
-                repeatAt(0, function() {
-                    currentTodos = todos.slice();
-                    newTodos = [];
-                    render();
-                });
+                // repeatAt(0, function() {
+                //     currentTodos = todos.slice();
+                //     newTodos = [];
+                //     render();
+                // });
                 // document.getElementById('newInput').onKeyUp = function() {
                 //     if (event.keyCode == 13) {
                 //         createNew();
