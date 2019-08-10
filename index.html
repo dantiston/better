@@ -31,7 +31,10 @@
 
             function newTodo(value, i, completed) {
                 var style = completed ? 'line-through' : 'none';
-                return "<div><button onclick=\"completeTodo(" + i + ")\">X</button><span style='text-decoration: " + style + "' id='todo" + i + "'>" + value + "</span></div>";
+                var attribute = completed ? 'disabled' : "onclick=\"completeTodo(" + i + ")\"";
+                return "<div><button " + attribute + ">X</button>" +
+                            "<span style='text-decoration: " + style + "' id='todo" + i + "'>" + value + "</span>" +
+                       "</div>";
             }
 
             function render() {
@@ -55,7 +58,9 @@
 
             function completeTodo(i) {
                 todo = currentTodos.splice(i, 1);
-                completedTodos.push(todo);
+                if (todo.length > 0) {
+                    completedTodos.push(todo[0]);
+                }
                 render();
             }
 
@@ -75,7 +80,7 @@
                 render();
                 // repeatAt(0, function() {
                 //     currentTodos = todos.slice();
-                //     newTodos = [];
+                //     completedTodos = [];
                 //     render();
                 // });
                 // document.getElementById('newInput').onKeyUp = function() {
@@ -86,6 +91,16 @@
                 // }
             };
         </script>
+        <style>
+            html {
+                font-size: 18pt;
+            }
+
+            button {
+                font-size: 16pt;
+                margin-right: 8pt;
+            }
+        </style>
     </head>
     <body>
         <ul id="todos"></ul>
