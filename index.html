@@ -30,10 +30,11 @@
             }
 
             function newTodo(value, i, completed) {
-                var style = completed ? 'line-through' : 'none';
+                // var style = completed ? 'line-through' : 'none';
+                var style = "style='" + (completed ? "text-decoration: line-through; color: #808080" : "color: #000000") + "'";
                 var attribute = completed ? 'disabled' : "onclick=\"completeTodo(" + i + ")\"";
                 return "<div><button " + attribute + ">X</button>" +
-                            "<span style='text-decoration: " + style + "' id='todo" + i + "'>" + value + "</span>" +
+                            "<span " + style + "' id='todo" + i + "'>" + value + "</span>" +
                        "</div>";
             }
 
