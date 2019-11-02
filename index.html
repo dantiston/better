@@ -2,12 +2,13 @@
     <head>
         <script type="text/javascript">
             todos = [
-                'Put Tommy out',
-                'Feed and medicate Tommy',
                 'Feed cats',
-                'Fill animal waters',
+                'Fill cat water',
+                'Clean cat boxes',
                 'Wash bottles',
-                'Check diaper pail'
+                'Make milk bottles',
+                'Check diaper pail',
+                'Put bag in diaper pail'
             ];
 
             currentTodos = todos.slice();
@@ -30,7 +31,6 @@
             }
 
             function newTodo(value, i, completed) {
-                // var style = completed ? 'line-through' : 'none';
                 var style = "style='" + (completed ? "text-decoration: line-through; color: #808080" : "color: #000000") + "'";
                 var attribute = completed ? 'disabled' : "onclick=\"completeTodo(" + i + ")\"";
                 return "<div><button " + attribute + ">X</button>" +
@@ -43,19 +43,7 @@
                 main.innerHTML = ""
                 main.innerHTML += load(currentTodos, false);
                 main.innerHTML += load(completedTodos, true);
-                // main.innerHTML += newTodoInput();
-                // main.innerHTML += addTodoButton();
             }
-
-            // function createNew() {
-            //     input = document.getElementsById('newInput');
-            //     alert(input.value);
-            //     if (input.value != '') {
-            //         currentTodos.push(input.value);
-            //     }
-            //     input.value = '';
-            //     render();
-            // }
 
             function completeTodo(i) {
                 todo = currentTodos.splice(i, 1);
@@ -65,31 +53,8 @@
                 render();
             }
 
-            // function repeatAt(hour, f) {
-            //     var now = new Date();
-            //     var date = now.getDate() + (now.getHours() < hour ? 0 : 1);
-            //     var start = new Date(now.getFullYear(), now.getMonth(), date, hour, 0, 0, 0);
-            //
-            //     var wait = start.getTime() - now.getTime();
-            //     setTimeout(() => {
-            //         f();
-            //         setInterval(f, this.secondsInTheDay);
-            //     }, wait);
-            // }
-
             window.onload = function() {
                 render();
-                // repeatAt(0, function() {
-                //     currentTodos = todos.slice();
-                //     completedTodos = [];
-                //     render();
-                // });
-                // document.getElementById('newInput').onKeyUp = function() {
-                //     if (event.keyCode == 13) {
-                //         createNew();
-                //         return false;
-                //     }
-                // }
             };
         </script>
         <style>
